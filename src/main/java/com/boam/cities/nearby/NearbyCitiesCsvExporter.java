@@ -15,8 +15,8 @@ import java.util.List;
 @Component
 public class NearbyCitiesCsvExporter {
     private static final Logger LOGGER = LoggerFactory.getLogger(NearbyCitiesCsvExporter.class);
-    private NearbyCityFinder nearbyCityFinder;
-    private CityDao cityDao;
+    private final NearbyCityFinder nearbyCityFinder;
+    private final CityDao cityDao;
 
     public NearbyCitiesCsvExporter(NearbyCityFinder nearbyCityFinder, CityDao cityDao) {
         this.nearbyCityFinder = nearbyCityFinder;
