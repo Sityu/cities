@@ -1,7 +1,6 @@
 package com.boam.cities.nearby;
 
 import com.boam.cities.city.City;
-import com.boam.cities.city.CsvCityDao;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,11 @@ import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
 @RequestMapping("/cities/nearby")
 public class NearbyCitiesController {
     private final NearbyCityFinder nearbyCityFinder;
+    private final NearbyCitiesCsvExporter exporter;
 
-    public NearbyCitiesController(NearbyCityFinder nearbyCityFinder, CsvCityDao csvCityDao) {
+    public NearbyCitiesController(NearbyCityFinder nearbyCityFinder, NearbyCitiesCsvExporter exporter) {
         this.nearbyCityFinder = nearbyCityFinder;
+        this.exporter = exporter;
     }
 
     @GetMapping("/{cityName}/{stateId}")
@@ -35,7 +36,7 @@ public class NearbyCitiesController {
 
     @GetMapping(value = "/export-all")
     public ResponseEntity<Resource> findNearbyCitiesForAll() throws Exception {
-        File export = nearbyCityFinder.exportNearbyCitiesForAll(5);
+        File export = exporter.exportNearbyCitiesForAll(5);
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=nearby-cities.csv")
                 .contentLength(export.length())
