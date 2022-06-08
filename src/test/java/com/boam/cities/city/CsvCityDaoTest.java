@@ -11,6 +11,7 @@ public class CsvCityDaoTest {
     @Test
     public void TestFindAllCities() {
         CsvCityDao csvCityDao = new CsvCityDao();
+        csvCityDao.init();
         List<City> allCities = csvCityDao.findAllCities();
 
         assertThat(allCities.size()).isEqualTo(30409);

@@ -13,6 +13,7 @@ public class NearbyCitiesFinderTest {
     @Test
     public void testFindNearbyCities() {
         CsvCityDao csvCityDao = new CsvCityDao();
+        csvCityDao.init();
         NearbyCityFinder nearbyCityFinder = new NearbyCityFinder(csvCityDao);
         List<City> nearbyCities = nearbyCityFinder.findNearbyCitiesFor("New York", "NY", 5);
 
