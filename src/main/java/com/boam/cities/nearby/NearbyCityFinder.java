@@ -8,13 +8,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class NearbyCityFinder {
-    private final CityDao cityDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(NearbyCityFinder.class);
+    private final CityDao cityDao;
 
     public NearbyCityFinder(CityDao cityDao) {
         this.cityDao = cityDao;
+    }
+
+    public List<NearbyCities> findForAll(int numberOfNearbyCities) {
+        return cityDao.findAllCities().stream()
+                .map(city -> new NearbyCities(city, findNearbyCitiesFor(city.name, city.stateId, numberOfNearbyCities)))
+                .collect(toList());
     }
 
     public List<City> findNearbyCitiesFor(String name, String stateId, int numberOfNearbyCities) {
